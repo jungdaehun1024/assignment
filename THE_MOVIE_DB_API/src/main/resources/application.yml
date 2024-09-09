@@ -1,0 +1,20 @@
+server:
+  port: 8080 # 서버의 포트 번호
+  servlet: # 서블릿 구성
+    context-path: #서블릿의 컨텍스트 경로 지정(디폴트 '/')
+    encoding: #문자 인코딩 설정
+      charset: UTF-8 #문자 집합을 UTF-8로
+      enabled: true #문자 인코딩을 사용할지 여부
+      force: true #강제로 문자 인코딩을 적용할지 여부
+
+spring:
+  mvc:
+    view:
+      prefix: /WEB-INF/views/ #JSP파일 위치를 나타내는 접두사
+      suffix: .jsp #jsp파일의 확장자를 나타내는 접미사
+      
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver # 드라이브 클래스 이름 지정
+    url: jdbc:mysql://localhost:3306/movie?serverTimeZone=Asia/Seoul
+    username: root
+    password: 182074 
