@@ -8,6 +8,7 @@ server:
       force: true #강제로 문자 인코딩을 적용할지 여부
 
 spring:
+
   mvc:
     view:
       prefix: /WEB-INF/views/ #JSP파일 위치를 나타내는 접두사
@@ -17,4 +18,7 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver # 드라이브 클래스 이름 지정
     url: jdbc:mysql://localhost:3306/movie?serverTimeZone=Asia/Seoul
     username: root
-    password: 182074 
+    password: 182074
+
+mybatis:
+  mapper-locations: classpath:/movieSQL.xml

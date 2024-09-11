@@ -6,7 +6,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.ecocow.service.MovieService;
 
@@ -29,5 +28,9 @@ public class MainController {
 		return "movieDetail";
 	}
 	
-	
+	@RequestMapping(value="/insertData" ,method= RequestMethod.POST)
+	public String insertData ()throws Exception{
+		System.out.println("성공"+movieService.insertData());
+		return "index";
+	}
 }
