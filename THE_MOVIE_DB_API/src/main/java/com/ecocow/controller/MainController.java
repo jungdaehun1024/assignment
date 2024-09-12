@@ -25,12 +25,8 @@ public class MainController {
 		model.addAttribute("movie",movieService.movieDetail(movieId));
 		model.addAttribute("recommend",movieService.recommendMovie(movieId));
 		
+		
 		return "movieDetail";
 	}
 	
-	@RequestMapping(value="/insertData" ,method= RequestMethod.POST)
-	public String insertData ()throws Exception{
-		System.out.println("성공"+movieService.insertData());
-		return "index";
-	}
 }

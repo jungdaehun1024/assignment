@@ -24,9 +24,8 @@ configurations {
 }
 
 repositories {
-    mavenLocal() // maven 로컬 캐시 저장소
 	mavenCentral()
-	maven { url "https://www.egovframe.go.kr/maven/" } // maven 원격 저장소
+
 
 }
 
