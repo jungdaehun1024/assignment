@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class RecommendDTO {
+public class Recommend {
 	private int page;
 	private List<ResultsDTO> results;
 	private int total_pages;

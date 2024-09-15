@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
-public class MovieDetailDto {
+public class MovieDetail {
 	private boolean adult;
 	private String backdrop_path;
 	private CollectionDTO belongs_to_collection;

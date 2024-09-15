@@ -10,9 +10,9 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import com.ecocow.dao.MovieDao;
-import com.ecocow.dto.MovieDetailDto;
+import com.ecocow.dto.MovieDetail;
 import com.ecocow.dto.MovieResponse;
-import com.ecocow.dto.RecommendDTO;
+import com.ecocow.dto.Recommend;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import okhttp3.OkHttpClient;
@@ -28,10 +28,10 @@ public class MovieService {
 	
 	
 	@Value("${url}")
-	private String baseUrl;
+	private String baseUrl; 
 	
 	@Value("${token}")
-	private String token;
+	private String token; //토큰값
 	
 	private final ObjectMapper objectMapper = new ObjectMapper();
 	private final OkHttpClient client = new  OkHttpClient();
@@ -60,7 +60,7 @@ public class MovieService {
 	}
 	
 	//영화 상세
-	public MovieDetailDto movieDetail(int movieId) throws Exception{
+	public MovieDetail movieDetail(int movieId) throws Exception{
 		
 	  //DB에 영화 정보가 없다면 TMDB api를 호출해서 값을 가져온다. + 해당 영화의 상세 값을 DB에 저장
 	  if(movieDao.movieExists(movieId) == 2) {
@@ -80,31 +80,29 @@ public class MovieService {
 				}
 				
 				String jsonResponse = response.body().string(); // Json을 문자열로 
-				MovieDetailDto result =objectMapper.readValue(jsonResponse,MovieDetailDto.class);  //문자열로 변환된 Json을 Dto에 매핑
+				MovieDetail result =objectMapper.readValue(jsonResponse,MovieDetail.class);  //문자열로 변환된 Json을 Dto에 매핑
 				
+				//Map에 json문자열과 영화 id값 저장
 				Map<String, Object> parameters = new HashMap<>();
 				parameters.put("id", result.getId()); // 영화 ID
 				parameters.put("movieDetailJson", jsonResponse); // JSON 문자열 직접 사용
-				movieDao.insertMovie(parameters);
+				movieDao.insertMovie(parameters); // DB에 영화 상세 정보 insert
 				
-				System.out.println("DB에 정보가 없는경우:"+result);
 				
 				return  result;
 			
 			}
 		  
 	  }else {
-		  //DB에 정보가 있는 경우
-		 
+		  //DB에 정보가 있는 경우 (DB에서 영화 상세정보를 가져온다)
 		  String result = movieDao.movieDetail(movieId);
-		  MovieDetailDto mappingResult = objectMapper.readValue(result, MovieDetailDto.class);
-		  System.out.println("DB에 정보가 있는경우:"+mappingResult);
+		  MovieDetail mappingResult = objectMapper.readValue(result, MovieDetail.class);  // DTO객체에 매핑
 		  return mappingResult;
 	  }
 	}
 	
-	
-	public RecommendDTO recommendMovie(int movieId)throws Exception{
+	//영화 추천
+	public Recommend recommendMovie(int movieId)throws Exception{
 		String url = String.format("https://api.themoviedb.org/3/movie/%d/recommendations?language=ko", movieId);
 
 		Request request = new Request.Builder()
@@ -119,7 +117,7 @@ public class MovieService {
 				throw new Exception();
 			}
 			String jsonResponse = response.body().string();
-			return objectMapper.readValue(jsonResponse, RecommendDTO.class);
+			return objectMapper.readValue(jsonResponse, Recommend.class);
 			
 		}
 	}
